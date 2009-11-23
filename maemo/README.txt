@@ -44,6 +44,30 @@ List of contributors
 * Mikko Ohtamaa (miohtama)
 
 
+Features
+--------
+
+The currently supported features of PhoneGap for Maemo
+
+* Support N900 (Fremantle) target
+
+* Build ARM and x86 binaries
+
+* Run in emulator
+
+* Run on the device 
+
+* Create distributable Debian files
+
+* Documented developemnt process
+
+PhoneGap APIs
+=============
+
+* Device info
+
+* Location
+
 Prerequisitements
 -----------------
 
@@ -157,7 +181,7 @@ direct Javascript-to-C++ API calls and other goodies are possible.
 
 index.html is bootstrapped by main.cpp in QWebView.
 
-Building ARM binaries and package on QEmu
+Building ARM binaries and package
 -----------------------------------------
 
 Additional resources
@@ -198,7 +222,7 @@ Brief instructions
 
 	dpkg-deb -c distribution/phonegapdemo_1.0.0_i386.deb 
 
-
+* You can also put your emulator/device to Red Pill mode: http://wiki.maemo.org/Red_Pill_mode
 
 Testing package
 ---------------
@@ -209,7 +233,10 @@ You can test your package installation right away.
 
    dpkg -i distribution/phonegap_1.0.0.deb
 
-Testing package in the emulator
+Building X86 binaries and package
+---------------------------------
+
+This is most suitable for testing on the simulator.
 
 * Switch scratchbox to FREMANTLE_X86
 
@@ -221,9 +248,9 @@ Testing package in the emulator
  
    make
 
-* Change ARCH in Distribution.mk
+* Change ARCH from ARMEL to i386 in Distribution.mk
 
-* Create DEB again::
+* Create .deb::
 
    make -f Distribution.make
 
@@ -236,8 +263,45 @@ Testing package in the emulator
    export DISPLAY=:2
    af-sb-init.sh start
 
+* Install .deb (simulation can run on the background)::
+
+   dpkg -i distribution/phonegap_1.0.0.deb
+
+* Run /usr/bin/phonegapdemo::
+ 
+   cd
+   phonegapdemo
+
+Distribute and install on the device
+------------------------------------
+
+* Copy .deb file available to any public network location. 
+
+* Download it using the web browser of the device
+
+* Install gainroot from Application Manager on the device
+
+* Start the terminal on the device
+
+* Install dependencies (now manually)::
+
+   sudo gainroot
+   apt-get install libqt4-webkit libqt4-phonon
+   apt-get install -f # (if needed)
+
+* Then install downloaded file which is usually under the user documents::
+
+   cd MyDocs
+   cd .documents
+   dpkg -i phonegapdemo_1.0.0.deb
+
+* Menu icon should appear
+
+* Enjoy!
+
+
 Building your own application
-================================
+------------------------------
 
 * Create a copy of Distribution.mk
 
@@ -272,9 +336,4 @@ You can copy-paste the resulting HTML code to your favorite HTML WYSIWYG editor.
 Known-issues
 ------------
 
-2009-11-04
-==========
-
-* Lots of features missing.
-
-* Initial Accelerometer code is there but it gives warnings.
+* It is not done yet

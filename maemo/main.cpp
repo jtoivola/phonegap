@@ -1,4 +1,5 @@
 #include <iostream>
+#include <unistd.h>
 
 #include <QApplication>
 #include <QWidget>
@@ -52,6 +53,8 @@ int main(int argc, char *argv[])
     PGWebPage* page = new PGWebPage();
     view->setPage(page);
 
+
+
     // Enable JS
     view->settings()->setAttribute(QWebSettings::JavascriptEnabled, TRUE);
 
@@ -75,6 +78,7 @@ int main(int argc, char *argv[])
 		std::cout << "No bootstrap JS - giving up" << std::endl;
 		return 1;
 	 }
+
 	 url = new QUrl("file:////usr/share/" BINARY_NAME "/www/index.html");
     }
 

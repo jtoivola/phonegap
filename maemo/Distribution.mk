@@ -16,14 +16,14 @@ COMPILED_BINARY=phonegap
 VERSION=1.0.0
 
 VERSION = 1.0.0
-ARCH = i386
+#ARCH = i386
 # Set to armel to build on the target
-#ARCH = armel
+ARCH = armel
 SECTION = user/other
 PRIORITY = optional
 MAINTAINER = Mikko Ohtamaa <mikko.ohtamaa@twinapex.com>
 # todo: For python2.4 it also needs python2.4-elementtree and python2.4-sqlite
-DEPENDS = libqt4-phonon,libqt4-sql-sqlite 
+DEPENDS = libqt4-webkit,libqt4-phonon
 
 # Which file contains .deb description
 DESCRIPTION=${BINARY}.txt
