@@ -42,7 +42,8 @@ static void AccelerometerCallback(DBusGProxy *proxy, DBusGProxyCall *call, void 
 
     g_free(s1); g_free(s2); g_free(s3);
 
-    gWebView->page()->mainFrame()->evaluateJavaScript("__PG_ACCELEROMETER_CALLBACK(10,20,30)");
+    QString callback = QString("__PG_ACCELEROMETER_CALLBACK(%d,%d,%d);").arg(x).arg(y).arg(z);
+    gWebView->page()->mainFrame()->evaluateJavaScript(callback);
 
   } else
   {

@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
     QWidget window;       
 
     window.resize(800, 480);
-    window.setWindowTitle("Simple example");
+    window.setWindowTitle("PhoneGap");
     window.show();
 
     // Construct the web view components
@@ -53,8 +53,6 @@ int main(int argc, char *argv[])
     PGWebPage* page = new PGWebPage();
     view->setPage(page);
 
-
-
     // Enable JS
     view->settings()->setAttribute(QWebSettings::JavascriptEnabled, TRUE);
 
@@ -63,10 +61,8 @@ int main(int argc, char *argv[])
 
     // Initialize PhoneGap APIs
     view->initPhoneGapAPI();
-
-
     
-	// It's 2:00 AM and I am getting tired with this...
+    // It's 2:00 AM and I am getting tired with this...
     QFile *file = new QFile("www/index.html");
     QUrl *url = new QUrl("file:///www/index.html");
 
