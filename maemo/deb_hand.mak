@@ -85,8 +85,6 @@ ${PACKAGE_DIR}/build: ${PACKAGE_DIR}/debian-binary ${PACKAGE_DIR}/control \
 # Note: Order of files within ar archive is important!
 ${PACKAGE_DIR}/${PACKAGE}_${VERSION}_${ARCH}.deb: ${PACKAGE_DIR}/build
 	ar -rc $@tmp $</debian-binary $</control.tar.gz $</data.tar.gz
-	#sed -e 's|^\([^/]\+\)/ \(.*\)|\1  \2|g' $@tmp > $@fail
-	#rm -f $@tmp
 	mv $@tmp $@
 
 .PHONY: data

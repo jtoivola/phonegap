@@ -11,24 +11,30 @@ Restructured text (reST) format is used for rich-text formatting in this file.
 <div class="contents topic" id="contents">
 <h3>Contents</h3>
 
-<ul>
-  <li><a href="#introduction" id="id2">Introduction</a></li>
-  <li><a href="#html-documentation" id="id3">HTML documentation</a></li>
-  <li><a href="#author" id="id4">Author</a><ul>
-  <li><a href="#list-of-contributors" id="id5">List of contributors</a></li>
+<ul> 
+  <li><a href="#introduction" id="id1">Introduction</a></li>
+  <li><a href="#html-documentation" id="id2">HTML documentation</a></li>
+  <li><a href="#author" id="id3">Author</a><ul>
+  <li><a href="#list-of-contributors" id="id4">List of contributors</a></li>
 </ul>
 </li>
-  <li><a href="#prerequisitements" id="id6">Prerequisitements</a></li>
-  <li><a href="#build-instructions" id="id7">Build instructions</a></li>
-  <li><a href="#run-instructions" id="id8">Run instructions</a></li>
-  <li><a href="#updating-phonegap-javascript-application" id="id9">Updating PhoneGap Javascript application</a></li>
-  <li><a href="#architecture" id="id10">Architecture</a></li>
-  <li><a href="#resources" id="id11">Resources</a></li>
-  <li><a href="#html-generation" id="id12">HTML generation</a></li>
-  <li><a href="#known-issues" id="id13">Known-issues</a><ul>
-  <li><a href="#id1" id="id14">2009-11-04</a></li>
+  <li><a href="#features" id="id5">Features</a><ul>
+  <li><a href="#phonegap-apis" id="id6">PhoneGap APIs</a></li>
 </ul>
 </li>
+  <li><a href="#prerequisitements" id="id7">Prerequisitements</a></li>
+  <li><a href="#build-instructions" id="id8">Build instructions</a></li>
+  <li><a href="#run-instructions" id="id9">Run instructions</a></li>
+  <li><a href="#updating-phonegap-javascript-application" id="id10">Updating PhoneGap Javascript application</a></li>
+  <li><a href="#architecture" id="id11">Architecture</a></li>
+  <li><a href="#building-arm-binaries-and-package" id="id12">Building ARM binaries and package</a></li>
+  <li><a href="#testing-package" id="id13">Testing package</a></li>
+  <li><a href="#building-x86-binaries-and-package" id="id14">Building X86 binaries and package</a></li>
+  <li><a href="#distribute-and-install-on-the-device" id="id15">Distribute and install on the device</a></li>
+  <li><a href="#building-your-own-application" id="id16">Building your own application</a></li>
+  <li><a href="#resources" id="id17">Resources</a></li>
+  <li><a href="#html-generation" id="id18">HTML generation</a></li>
+  <li><a href="#known-issues" id="id19">Known-issues</a></li>
 </ul>
 </div>
 <h4>Introduction</h4>
@@ -58,6 +64,24 @@ For community support use PhoneGap Google Group. For inquiries regarding develop
 <ul>
   <li>Jussi Toivola (jtoivola)</li>
   <li>Mikko Ohtamaa (miohtama)</li>
+</ul>
+<h4>Features</h4>
+
+The currently supported features of PhoneGap for Maemo
+
+<ul>
+  <li>Support N900 (Fremantle) target</li>
+  <li>Build ARM and x86 binaries</li>
+  <li>Run in emulator</li>
+  <li>Run on the device</li>
+  <li>Create distributable Debian files</li>
+  <li>Documented developemnt process</li>
+</ul>
+<h5>PhoneGap APIs</h5>
+
+<ul>
+  <li>Device info</li>
+  <li>Location</li>
 </ul>
 <h4>Prerequisitements</h4>
 
@@ -185,6 +209,135 @@ Maemo Qt libraries are rich in functionality, including QWebView, so direct Java
 
 index.html is bootstrapped by main.cpp in QWebView.
 
+<h4>Building ARM binaries and package</h4>
+
+Additional resources
+
+<ul>
+  <li>help <a href="http://wiki.forum.nokia.com/index.php/Maemo_5_SDK_installation_for_beginners#Nokia_binaries_for_ARM_.28ARMEL.29">http://wiki.forum.nokia.com/index.php/Maemo_5_SDK_installation_for_beginners#Nokia_binaries_for_ARM_.28ARMEL.29</a></li>
+  <li><a href="http://wiki.maemo.org/Packaging_a_Qt_application">http://wiki.maemo.org/Packaging_a_Qt_application</a></li>
+  <li><a href="http://tldp.org/HOWTO/Debian-Binary-Package-Building-HOWTO/x60.html">http://tldp.org/HOWTO/Debian-Binary-Package-Building-HOWTO/x60.html</a></li>
+</ul>
+Brief instructions
+
+<ul>
+  <li>Download and install Nokia Maemo 5 SDK (<strong>not</strong> Maemo SDK+)</li>
+  <li>Enable Nokia binaries and add Nokia binary blob deb line from <a href="http://tablets-dev.nokia.com/eula/index.php">here</a>:</li>
+  <li>Enter Scratchbox (ARMEL):<pre>
+/scratchbox/login
+sb-conf se FREMANTLE_ARMEL
+</pre>
+
+</li>
+  <li><strong>DO NOT RUN sb-menu setup target - this will screw your scratchbox installation</strong></li>
+  <li>After you see FREMANTLE_ARMEL prompt install the build dependencies:<pre>
+fakeroot apt-get install libqt4-phonon libqt4-opengl libqt4-opengl-dev libqt4-sql-sqlite gawk sharutils
+</pre>
+
+</li>
+  <li>Compile binary:<pre>
+qmake
+make
+</pre>
+
+</li>
+  <li>Run Debian packager:<pre>
+make -f Distribution.mk
+</pre>
+
+</li>
+  <li>Check package contents:<pre>
+dpkg-deb -c distribution/phonegapdemo_1.0.0_i386.deb
+</pre>
+
+</li>
+  <li>You can also put your emulator/device to Red Pill mode: <a href="http://wiki.maemo.org/Red_Pill_mode">http://wiki.maemo.org/Red_Pill_mode</a></li>
+</ul>
+<h4>Testing package</h4>
+
+You can test your package installation right away.
+
+<ul>
+  <li>Install package inside ARMEL scratchbox:<pre>
+dpkg -i distribution/phonegap_1.0.0.deb
+</pre>
+
+</li>
+</ul>
+<h4>Building X86 binaries and package</h4>
+
+This is most suitable for testing on the simulator.
+
+<ul>
+  <li>Switch scratchbox to FREMANTLE_X86</li>
+  <li>Clean up between architectures:<pre>
+make clean
+</pre>
+
+</li>
+  <li>Build again:<pre>
+make
+</pre>
+
+</li>
+  <li>Change ARCH from ARMEL to i386 in Distribution.mk</li>
+  <li>Create .deb:<pre>
+make -f Distribution.make
+</pre>
+
+</li>
+  <li>Start Xephyr on host:<pre>
+Xephyr :2 -host-cursor -screen 800x480x16 -dpi 96 -ac -kb
+</pre>
+
+</li>
+  <li>Run Maemo simulation environment
+export DISPLAY=:2 af-sb-init.sh start
+</li>
+  <li>Install .deb (simulation can run on the background):<pre>
+dpkg -i distribution/phonegap_1.0.0.deb
+</pre>
+
+</li>
+  <li>Run /usr/bin/phonegapdemo:<pre>
+cd
+phonegapdemo
+</pre>
+
+</li>
+</ul>
+<h4>Distribute and install on the device</h4>
+
+<ul>
+  <li>Copy .deb file available to any public network location.</li>
+  <li>Download it using the web browser of the device</li>
+  <li>Install gainroot from Application Manager on the device</li>
+  <li>Start the terminal on the device</li>
+  <li>Install dependencies (now manually):<pre>
+sudo gainroot
+apt-get install libqt4-webkit libqt4-phonon
+apt-get install -f # (if needed)
+</pre>
+
+</li>
+  <li>Then install downloaded file which is usually under the user documents:<pre>
+cd MyDocs
+cd .documents
+dpkg -i phonegapdemo_1.0.0.deb
+</pre>
+
+</li>
+  <li>Menu icon should appear</li>
+  <li>Enjoy!</li>
+</ul>
+<h4>Building your own application</h4>
+
+<ul>
+  <li>Create a copy of Distribution.mk</li>
+  <li>Edit headers as you see nessary for your application</li>
+  <li>Create copy of phonegapdemo.desktop</li>
+  <li>Edit main.cpp - change BINARY_NAME</li>
+</ul>
 <h4>Resources</h4>
 
 <ul>
@@ -208,10 +361,7 @@ You can copy-paste the resulting HTML code to your favorite HTML WYSIWYG editor.
 
 <h4>Known-issues</h4>
 
-<h5>2009-11-04</h5>
-
 <ul>
-  <li>Lots of features missing.</li>
-  <li>Initial Accelerometer code is there but it gives warnings.</li>
+  <li>It is not done yet</li>
 </ul>
 
